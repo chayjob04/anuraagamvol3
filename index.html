@@ -164,11 +164,8 @@
   <input type="text" id="searchBar" placeholder="Search by song number or name...">
 
   <div id="songContainer">
-    <h2 class="section-title">Karthik Songs</h2>
-    <ul class="song-list" id="list-karthik"></ul>
-
-    <h2 class="section-title">Harris Jayaraj Songs</h2>
-    <ul class="song-list" id="list-harris"></ul>
+    <h2 class="section-title">LYRICS</h2>
+    <ul class="song-list" id="list-lyrics"></ul>
   </div>
 
   <p class="no-results" id="noResults">No songs match your search.</p>
@@ -177,22 +174,45 @@
 </div>
 
 <script>
-  const karthikSongs = [
-    "Choododhe", "Ale ale", "Girlfriend", "Kannulabashalu", "Oka maru",
-    "Choododhantunna", "Oru ghallukey", "Hoyna aata", "Arere arere", "O my friend",
-    "Chilipiga", "Muthyala daraney", "Devatha", "Mila mila", "Yellipokey shamala",
-    "Vaalu kalla vayyari", "Adiga", "Nijanga nenena", "Nilavadhamu", "Akasham badhalaina",
-    "Hello rammante", "Ammaye sannaga", "Yedutanilichindi"
-  ];
-
-  const harrisSongs = [
-    "Rooba Rooba", "Nenu nuvvantu", "Hello rammante inc", "Naloney pongenu",
-    "Monna kanipinchavu", "Athey nanne nanne", "Yedane koyyake", "O sukumari",
-    "June pothey", "ye chilipi", "Nanne nanne chusthu", "Cheliya cheliya",
-    "Pataku pranam", "Kallu moosi", "Enduko Emo", "Manohara",
-    "Neekemkavalo Cheppu", "Hrudayam ekkadunnadhi", "New York nagaram", "Oy oy",
-    "Chiru chiru"
-  ];
+  const lyricsSongs = [
+  "Orugalluke pilla",
+  "Orori yogi",
+  "Nanne nanne choosthu",
+  "Chamka chamka",
+  "Dole dole",
+  "Sye",
+  "Allegra",
+  "Monica",
+  "Ballari baava",
+  "Naalo oohalaku",
+  "Ellora shilpanni",
+  "Dailamo dailamo",
+  "Andagada",
+  "Vayyari bhaama",
+  "Jagada jagada",
+  "Bekhayali",
+  "Humma humma",
+  "Kaise hua",
+  "Maate vinadhuga",
+  "Oka maaru",
+  "Panja",
+  "Adaraku",
+  "Rakta charitra",
+  "Eega",
+  "Sayonara",
+  "Oy oy",
+  "Cheliya cheliya",
+  "Chaila chaila",
+  "Ela ela naalo",
+  "Ramulo ramula",
+  "Nee yadhalo",
+  "June pothe",
+  "Manasa nuvvu unde chote cheppamma",
+  "Rooba rooba",
+  "Yemito yemito",
+  "O navvu chaalu",
+  "Billa"
+];
 
   let globalIndex = 1;
 
@@ -223,8 +243,7 @@
     });
   }
 
-  buildList("list-karthik", karthikSongs);
-  buildList("list-harris", harrisSongs);
+  buildList("list-lyrics", lyricsSongs);
 
   const searchBar = document.getElementById("searchBar");
   const allItems = document.querySelectorAll(".song-item");
