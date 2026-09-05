@@ -1,276 +1,564 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Song Lyrics Finder</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;500;600;700&display=swap');
 
-  :root {
-    --red: #e13c2e;
-    --red-dark: #c22a1f;
-    --black: #0d0d0d;
-    --panel: #161616;
-    --cream: #f2ede4;
-    --muted: #b8b2a8;
-    --border: #2c2c2c;
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    font-family: 'Oswald', 'Segoe UI', sans-serif;
-    background-color: var(--black);
-    background-image: url('assets/red-bg.jpeg');
-    background-repeat: repeat;
-    background-size: 500px auto;
-    background-position: top left;
-    color: var(--cream);
-    padding: 0 0 60px;
-  }
-  header.hero {
-    background: rgba(13,13,13,0.40);
-    backdrop-filter: blur(1px);
-    padding: 50px 16px 6px;
-    text-align: center;
-    border-bottom: 5px solid var(--red);
-    position: relative;
-    overflow: visible;
-  }
-  header.hero img {
-    max-width: 320px;
-    width: 85%;
-    height: auto;
-    margin: -30px 0 0px;
-    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5));
-    position: relative;
-    display: inline-block;
-  }
-  h1.tagline {
-    font-family: 'Anton', sans-serif;
-    letter-spacing: 2px;
-    font-size: 1.5rem;
-    margin: 6px 0 4px;
-    color: var(--cream);
-    text-transform: uppercase;
-  }
-  p.sub {
-    text-align: center;
-    color: var(--muted);
-    margin: 0;
-    font-size: 0.9rem;
-    letter-spacing: 0.5px;
-  }
-  .wrap {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 24px 16px 0;
-  }
-  #searchBar {
-    width: 100%;
-    padding: 13px 16px;
-    font-family: 'Oswald', sans-serif;
-    font-size: 1rem;
-    border-radius: 8px;
-    border: 2px solid var(--border);
-    background: rgba(22,22,22,0.9);
-    color: var(--cream);
-    outline: none;
-    margin-bottom: 24px;
-  }
-  #searchBar::placeholder { color: var(--muted); }
-  #searchBar:focus {
-    border-color: var(--red);
-  }
-  h2.section-title {
-    font-family: 'Anton', sans-serif;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: #ffffff;
-    text-shadow: 2px 2px 0 rgba(0,0,0,0.7), 0 0 10px rgba(0,0,0,0.4);
-    border-bottom: 2px solid var(--red-dark);
-    padding-bottom: 8px;
-    margin-top: 34px;
-    font-size: 1.15rem;
-  }
-  ul.song-list {
-    list-style: none;
-    padding: 0;
-    margin: 10px 0;
-  }
-  li.song-item {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-    padding: 11px 12px;
-    border-radius: 6px;
-    background: rgba(10,10,10,0.82);
-    margin-bottom: 4px;
-    transition: background 0.15s ease, transform 0.1s ease;
-    -webkit-tap-highlight-color: transparent;
-  }
-  li.song-item:active {
-    background: rgba(225,60,46,0.35);
-    transform: translateX(2px);
-  }
-  @media (hover: hover) {
-    li.song-item:hover {
-      background: rgba(225,60,46,0.35);
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Song Lyrics Finder</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;500;600;700&display=swap');
+
+    :root {
+      --red: #e13c2e;
+      --red-dark: #c22a1f;
+      --black: #0d0d0d;
+      --panel: #161616;
+      --cream: #f2ede4;
+      --muted: #b8b2a8;
+      --border: #2c2c2c;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Oswald', 'Segoe UI', sans-serif;
+      background-color: var(--black);
+      background-image: url('assets/red-bg.jpeg');
+      background-repeat: repeat;
+      background-size: 500px auto;
+      background-position: top left;
+      color: var(--cream);
+      padding: 0 0 60px;
+    }
+
+    /* HEADER */
+    header.hero {
+      background: rgba(13, 13, 13, 0.40);
+      backdrop-filter: blur(1px);
+      padding: 50px 16px 6px;
+      text-align: center;
+      border-bottom: 5px solid var(--red);
+      position: relative;
+      overflow: visible;
+    }
+
+    header.hero img {
+      max-width: 320px;
+      width: 85%;
+      height: auto;
+      margin: -30px 0 0;
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
+      position: relative;
+      display: inline-block;
+    }
+
+    h1.tagline {
+      font-family: 'Anton', sans-serif;
+      letter-spacing: 2px;
+      font-size: 1.5rem;
+      margin: 6px 0 4px;
+      color: var(--cream);
+      text-transform: uppercase;
+    }
+
+    p.sub {
+      text-align: center;
+      color: var(--muted);
+      margin: 0;
+      font-size: 0.9rem;
+      letter-spacing: 0.5px;
+    }
+
+    /* MAIN CONTENT */
+    .wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 24px 16px 0;
+    }
+
+    /* SEARCH BAR */
+    #searchBar {
+      width: 100%;
+      padding: 13px 16px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: 2px solid var(--border);
+      background: rgba(22, 22, 22, 0.9);
+      color: var(--cream);
+      outline: none;
+      margin-bottom: 24px;
+    }
+
+    #searchBar::placeholder {
+      color: var(--muted);
+    }
+
+    #searchBar:focus {
+      border-color: var(--red);
+    }
+
+    /* SECTION TITLES */
+    h2.section-title {
+      font-family: 'Anton', sans-serif;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #ffffff;
+      text-shadow:
+        2px 2px 0 rgba(0, 0, 0, 0.7),
+        0 0 10px rgba(0, 0, 0, 0.4);
+      border-bottom: 2px solid var(--red-dark);
+      padding-bottom: 8px;
+      margin-top: 34px;
+      margin-bottom: 10px;
+      font-size: 1.15rem;
+    }
+
+    /* SONG LIST */
+    ul.song-list {
+      list-style: none;
+      padding: 0;
+      margin: 10px 0 20px;
+    }
+
+    li.song-item {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      padding: 11px 12px;
+      border-radius: 6px;
+      background: rgba(10, 10, 10, 0.82);
+      margin-bottom: 4px;
+      transition: background 0.15s ease, transform 0.1s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    li.song-item:active {
+      background: rgba(225, 60, 46, 0.35);
       transform: translateX(2px);
     }
-  }
-  .num {
-    color: var(--red);
-    font-weight: 600;
-    min-width: 28px;
-    font-size: 0.9rem;
-  }
-  a.song-link {
-    color: var(--cream);
-    text-decoration: none;
-    font-size: 1.02rem;
-    letter-spacing: 0.3px;
-    flex: 1;
-    -webkit-tap-highlight-color: transparent;
-  }
-  a.song-link:hover {
-    color: #ffffff;
-    text-decoration: underline;
-    text-decoration-color: var(--red);
-  }
-  .no-results {
-    text-align: center;
-    color: var(--muted);
-    margin-top: 30px;
-    display: none;
-  }
-  footer.foot {
-    text-align: center;
-    color: var(--muted);
-    font-size: 0.8rem;
-    margin-top: 50px;
-    letter-spacing: 0.5px;
-  }
-</style>
+
+    @media (hover: hover) {
+      li.song-item:hover {
+        background: rgba(225, 60, 46, 0.35);
+        transform: translateX(2px);
+      }
+    }
+
+    /* NUMBER */
+    .num {
+      color: var(--red);
+      font-weight: 600;
+      min-width: 28px;
+      font-size: 0.9rem;
+    }
+
+    /* SONG LINK */
+    a.song-link {
+      color: var(--cream);
+      text-decoration: none;
+      font-size: 1.02rem;
+      letter-spacing: 0.3px;
+      flex: 1;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    a.song-link:hover {
+      color: #ffffff;
+      text-decoration: underline;
+      text-decoration-color: var(--red);
+    }
+
+    /* NO RESULTS */
+    .no-results {
+      text-align: center;
+      color: var(--muted);
+      margin-top: 30px;
+      display: none;
+    }
+
+    /* FOOTER */
+    footer.foot {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.8rem;
+      margin-top: 50px;
+      letter-spacing: 0.5px;
+    }
+
+    /* MOBILE */
+    @media (max-width: 600px) {
+      header.hero {
+        padding-top: 40px;
+      }
+
+      header.hero img {
+        max-width: 280px;
+      }
+
+      h1.tagline {
+        font-size: 1.35rem;
+      }
+
+      p.sub {
+        font-size: 0.82rem;
+      }
+
+      .wrap {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+
+      li.song-item {
+        padding: 12px;
+      }
+
+      a.song-link {
+        font-size: 1rem;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<header class="hero">
-  <img src="assets/anuraagam-logo.png" alt="Anuraagam logo">
-  <h1 class="tagline">Song Lyrics Finder</h1>
-  <p class="sub">Search by number or name, then click a song to find its lyrics</p>
-</header>
 
-<div class="wrap">
-  <input type="text" id="searchBar" placeholder="Search by song number or name...">
+  <!-- HEADER -->
+  <header class="hero">
 
-  <div id="songContainer">
-    <h2 class="section-title">LYRICS</h2>
-    <ul class="song-list" id="list-lyrics"></ul>
+    <img
+      src="assets/anuraagam-logo.png"
+      alt="Anuraagam logo"
+    >
+
+    <h1 class="tagline">
+      Song Lyrics Finder
+    </h1>
+
+    <p class="sub">
+      Search by number or name, then click a song to find its lyrics
+    </p>
+
+  </header>
+
+
+  <!-- MAIN -->
+  <div class="wrap">
+
+    <!-- SEARCH -->
+    <input
+      type="text"
+      id="searchBar"
+      placeholder="Search by song number or name..."
+      autocomplete="off"
+    >
+
+
+    <!-- SONG CONTAINER -->
+    <div id="songContainer">
+
+      <!-- YUVAN SHANKAR RAJA -->
+      <div class="song-section">
+
+        <h2 class="section-title">
+          Yuvan Shankar Raja Songs
+        </h2>
+
+        <ul
+          class="song-list"
+          id="list-yuvan"
+        ></ul>
+
+      </div>
+
+
+      <!-- MANI SHARMA -->
+      <div class="song-section">
+
+        <h2 class="section-title">
+          Mani Sharma Songs
+        </h2>
+
+        <ul
+          class="song-list"
+          id="list-mani"
+        ></ul>
+
+      </div>
+
+    </div>
+
+
+    <!-- NO RESULTS -->
+    <p
+      class="no-results"
+      id="noResults"
+    >
+      No songs match your search.
+    </p>
+
+
+    <!-- FOOTER -->
+    <footer class="foot">
+      Anuraagam — More Than A Song.
+    </footer>
+
   </div>
 
-  <p class="no-results" id="noResults">No songs match your search.</p>
 
-  <footer class="foot">Anuraagam — More Than A Song.</footer>
-</div>
+  <script>
 
-<script>
-  const lyricsSongs = [
-  "Orugalluke pilla",
-  "Orori yogi",
-  "Nanne nanne choosthu",
-  "Chamka chamka",
-  "Dole dole",
-  "Sye",
-  "Allegra",
-  "Monica",
-  "Ballari baava",
-  "Naalo oohalaku",
-  "Ellora shilpanni",
-  "Dailamo dailamo",
-  "Andagada",
-  "Vayyari bhaama",
-  "Jagada jagada",
-  "Bekhayali",
-  "Humma humma",
-  "Kaise hua",
-  "Maate vinadhuga",
-  "Oka maaru",
-  "Panja",
-  "Adaraku",
-  "Rakta charitra",
-  "Eega",
-  "Sayonara",
-  "Oy oy",
-  "Cheliya cheliya",
-  "Chaila chaila",
-  "Ela ela naalo",
-  "Ramulo ramula",
-  "Nee yadhalo",
-  "June pothe",
-  "Manasa nuvvu unde chote cheppamma",
-  "Rooba rooba",
-  "Yemito yemito",
-  "O navvu chaalu",
-  "Billa"
-];
+    /* =========================================
+       YUVAN SHANKAR RAJA SONGS
+       ========================================= */
 
-  let globalIndex = 1;
+    const yuvanSongs = [
 
-  function buildList(containerId, songs) {
-    const ul = document.getElementById(containerId);
-    songs.forEach(song => {
-      const li = document.createElement("li");
-      li.className = "song-item";
-      li.dataset.number = globalIndex;
-      li.dataset.name = song.toLowerCase();
+      "Gulabhi Kallu Rendu",
 
-      const num = document.createElement("span");
-      num.className = "num";
-      num.textContent = globalIndex + ".";
+      "Ela Ela",
 
-      const a = document.createElement("a");
-      a.className = "song-link";
-      a.href = "https://www.google.com/search?q=" + encodeURIComponent(song + " song lyrics");
-      a.target = "_blank";
-      a.rel = "noopener noreferrer";
-      a.textContent = song;
+      "Chiru Chiru",
 
-      li.appendChild(num);
-      li.appendChild(a);
-      ul.appendChild(li);
+      "Nee Yedhalo",
 
-      globalIndex++;
-    });
-  }
+      "Emaindhi Ee Vela",
 
-  buildList("list-lyrics", lyricsSongs);
+      "Allanthadoorala",
 
-  const searchBar = document.getElementById("searchBar");
-  const allItems = document.querySelectorAll(".song-item");
-  const sections = document.querySelectorAll(".section-title");
-  const noResults = document.getElementById("noResults");
+      "Arere Vaana",
 
-  searchBar.addEventListener("input", function() {
-    const query = this.value.trim().toLowerCase();
-    let anyVisible = false;
+      "Oke Oka Jeevitham",
 
-    allItems.forEach(item => {
-      const matches = item.dataset.number === query || item.dataset.name.includes(query) || query === "";
-      item.style.display = matches ? "flex" : "none";
-      if (matches) anyVisible = true;
-    });
+      "Egire Mabbulalona",
 
-    // Hide section headings if all their items are hidden
-    document.querySelectorAll(".song-list").forEach(ul => {
-      const visibleItems = ul.querySelectorAll('.song-item[style="display: flex;"]');
-      const heading = ul.previousElementSibling;
-      const hasVisible = Array.from(ul.children).some(li => li.style.display !== "none");
-      heading.style.display = hasVisible ? "block" : "none";
-      ul.style.display = hasVisible ? "block" : "none";
-    });
+      "Evare Nuvvu",
 
-    noResults.style.display = anyVisible ? "none" : "block";
-  });
-</script>
+      "Oy Oy",
+
+      "Kannula Bashalu"
+
+    ];
+
+
+    /* =========================================
+       MANI SHARMA SONGS
+       ========================================= */
+
+    const maniSharmaSongs = [
+
+      "Enduku Pichi",
+
+      "Ye Mera Jaha",
+
+      "Ammaye Sannaga",
+
+      "Premante Suluvu Kadu Ra",
+
+      "Dole Dole",
+
+      "Cheppave Chirugaali",
+
+      "Yamaha Nagari",
+
+      "Avunu Nijam",
+
+      "Gelupu Talupule",
+
+      "Nammavemo Gaani",
+
+      "Bulli Gownu",
+
+      "Gala Gala Paaruthunna",
+
+      "Sada Shiva"
+
+    ];
+
+
+    /* =========================================
+       BUILD SONG LIST
+       ========================================= */
+
+    let globalIndex = 1;
+
+
+    function buildList(containerId, songs) {
+
+      const ul = document.getElementById(containerId);
+
+
+      songs.forEach(song => {
+
+        const li = document.createElement("li");
+
+        li.className = "song-item";
+
+
+        /* SEARCH DATA */
+
+        li.dataset.number = globalIndex;
+
+        li.dataset.name = song.toLowerCase();
+
+
+        /* NUMBER */
+
+        const num = document.createElement("span");
+
+        num.className = "num";
+
+        num.textContent = globalIndex + ".";
+
+
+        /* SONG LINK */
+
+        const a = document.createElement("a");
+
+        a.className = "song-link";
+
+
+        a.href =
+          "https://www.google.com/search?q=" +
+          encodeURIComponent(song + " song lyrics");
+
+
+        a.target = "_blank";
+
+        a.rel = "noopener noreferrer";
+
+        a.textContent = song;
+
+
+        /* ADD ELEMENTS */
+
+        li.appendChild(num);
+
+        li.appendChild(a);
+
+        ul.appendChild(li);
+
+
+        /* NEXT NUMBER */
+
+        globalIndex++;
+
+      });
+
+    }
+
+
+    /* =========================================
+       CREATE BOTH LISTS
+       ========================================= */
+
+    buildList(
+      "list-yuvan",
+      yuvanSongs
+    );
+
+
+    buildList(
+      "list-mani",
+      maniSharmaSongs
+    );
+
+
+    /* =========================================
+       SEARCH
+       ========================================= */
+
+    const searchBar =
+      document.getElementById("searchBar");
+
+    const noResults =
+      document.getElementById("noResults");
+
+
+    searchBar.addEventListener(
+      "input",
+      function () {
+
+        const query =
+          this.value
+            .trim()
+            .toLowerCase();
+
+
+        let anyVisible = false;
+
+
+        /* CHECK EACH SECTION */
+
+        document
+          .querySelectorAll(".song-section")
+          .forEach(section => {
+
+
+            const heading =
+              section.querySelector(".section-title");
+
+            const list =
+              section.querySelector(".song-list");
+
+
+            let sectionHasVisible = false;
+
+
+            /* CHECK SONGS */
+
+            list
+              .querySelectorAll(".song-item")
+              .forEach(item => {
+
+
+                const matches =
+                  query === "" ||
+                  item.dataset.number === query ||
+                  item.dataset.name.includes(query);
+
+
+                item.style.display =
+                  matches ? "flex" : "none";
+
+
+                if (matches) {
+
+                  sectionHasVisible = true;
+
+                  anyVisible = true;
+
+                }
+
+              });
+
+
+            /* HIDE EMPTY SECTION */
+
+            heading.style.display =
+              sectionHasVisible ? "block" : "none";
+
+
+            list.style.display =
+              sectionHasVisible ? "block" : "none";
+
+          });
+
+
+        /* NO RESULTS MESSAGE */
+
+        noResults.style.display =
+          anyVisible ? "none" : "block";
+
+      }
+    );
+
+  </script>
+
 </body>
+
 </html>
